@@ -22,6 +22,14 @@ class Details extends Component{
                 <p>{item.description}</p>
                 </div>
             )}) }
+            <h3>Genres</h3>
+            <ul>
+            {this.props.reduxStore.genres.map( (item, i) =>{ return (
+                <div key={i}>
+                <li>{item.name}</li> 
+                </div>
+            )}) }
+            </ul>
             </>
         )
     }

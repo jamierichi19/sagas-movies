@@ -6,6 +6,7 @@ class MovieItem extends Component {
     
     goToDetails = (event, id) => {
         this.props.dispatch({ type: 'GET_DETAILS', payload: {id: id} });
+        this.props.dispatch({ type: 'GET_GENRES', payload: {id: id} });
     }
 
     render(){
