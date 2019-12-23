@@ -15,4 +15,16 @@ router.get('/', (req, res) => {
     })
   });
 
+// return Details for selected movie
+router.get(`/:id`, (req, res) => {
+    let queryText = 'SELECT title, description, id FROM movies WHERE id=$1;';
+    pool.query( queryText, [req.params.id] )
+    .then( result => {
+      res.send( result.rows)
+    }).catch( error =>{
+      console.log( 'error with get', error)
+      res.sendStatus( 500 )
+    })
+  });
+
   module.exports = router;
