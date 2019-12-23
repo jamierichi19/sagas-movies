@@ -27,4 +27,19 @@ router.get(`/:id`, (req, res) => {
     })
   });
 
+// Edit movie details
+router.put('/:id', (req, res) => {
+  let movieId = req.params.id;
+  let title = req.body.title;
+  let description = req.body.description;
+  const sqlText = 'UPDATE "movies" SET "title" = $1, "description" = $2 WHERE id = $3;';
+  pool.query( sqlText, [title, description, movieId])
+    .then( (response) =>{
+      res.sendStatus(200)
+    }).catch( (error) =>{
+      console.log('Error with Edit', error);
+      res.sendStatus(500)
+    })
+})
+
   module.exports = router;
