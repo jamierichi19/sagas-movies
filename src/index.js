@@ -18,6 +18,7 @@ function* rootSaga() {
     yield takeEvery( 'GET_MOVIES', getMoviesSaga);
     yield takeEvery( 'GET_DETAILS', getDetailsSaga);
     yield takeEvery( 'GET_GENRES', getGenresSaga);
+    yield takeEvery( 'EDIT_DETAILS', editDetailsSaga)
 }
 
 // Gets all the movie details from the server and sends them to a holder reducer
@@ -25,6 +26,15 @@ function* getDetailsSaga(action){
     try{
         const response = yield axios.get(`/movies/${action.payload.id}`);
         yield put({type: 'SET_DETAILS', payload: response.data})
+    } catch (error){
+        console.log(error)
+    }
+}
+
+// Sends data to the server to edit movie details
+function* editDetailsSaga(action){
+    try{
+        yield axios.put(`/movies/${action.payload.id}`, action.payload);
     } catch (error){
         console.log(error)
     }
