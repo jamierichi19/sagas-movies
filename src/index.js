@@ -17,7 +17,7 @@ import axios from 'axios';
 function* rootSaga() {
     yield takeEvery( 'GET_MOVIES', getMoviesSaga);
     yield takeEvery( 'GET_DETAILS', getDetailsSaga);
-
+    yield takeEvery( 'GET_GENRES', getGenresSaga);
 }
 
 // Gets all the movie details from the server and sends them to a holder reducer
@@ -25,6 +25,16 @@ function* getDetailsSaga(action){
     try{
         const response = yield axios.get(`/movies/${action.payload.id}`);
         yield put({type: 'SET_DETAILS', payload: response.data})
+    } catch (error){
+        console.log(error)
+    }
+}
+
+// Gets all the movie genres from the server and sends them to a holder reducer
+function* getGenresSaga(action){
+    try{
+        const response = yield axios.get(`/genres/${action.payload.id}`);
+        yield put({type: 'SET_GENRES', payload: response.data})
     } catch (error){
         console.log(error)
     }
