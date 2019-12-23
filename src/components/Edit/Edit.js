@@ -1,5 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+import { TextField, Button } from '@material-ui/core/';
+import CancelIcon from '@material-ui/icons/Cancel';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
+
+const styles = theme => ({
+    button: {
+        margin: theme.spacing.unit,
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+    },
+});
+
 
 class Edit extends Component{
 
@@ -27,14 +42,19 @@ class Edit extends Component{
       })
     }
     render(){
+        const { classes } = this.props;
         return(
             <>
-            <input type="text" placeholder="Updtate Title" onChange={(event)=>this.handleChange(event, 'title')} value={this.state.title}/>
-            <br></br>
-            <textarea type="text" placeholder="Update Description" onChange={(event)=>this.handleChange(event, 'description')} value={this.state.description} />
-            <br></br>
-            <button onClick={this.goBack}>Cancel</button>
-            <button onClick={(event) => this.editDetails(event)} >Save</button>
+            <TextField className={classes.textField} variant="outlined" type="text" label="Updtate Title" 
+                onChange={(event)=>this.handleChange(event, 'title')} value={this.state.title}/>
+            <br />
+            <TextField className={classes.textField} variant="outlined" multiline rows="4" type="text" placeholder="Update Description" 
+                onChange={(event)=>this.handleChange(event, 'description')} value={this.state.description} />
+            <br />
+            <Button variant="contained" color="secondary" className={classes.button} onClick={this.goBack}>
+                <CancelIcon className={classes.leftIcon} />Cancel</Button>
+            <Button variant="contained" color="primary" className={classes.button} 
+                onClick={(event) => this.editDetails(event)} >Save<SaveAltIcon className={classes.rightIcon} /></Button>
             </>
         )
     }
@@ -44,4 +64,4 @@ const putReduxStateOnProps = (reduxStore) => ({
     reduxStore
 })
 
-export default connect(putReduxStateOnProps)(Edit);
+export default withStyles(styles)(connect(putReduxStateOnProps)(Edit));
