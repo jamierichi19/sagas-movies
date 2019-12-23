@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+import { Card, CardContent} from '@material-ui/core/';
+
+const styles = theme => ({
+    card: {
+        minWidth: 275,
+        height: 780
+    },
+});
 
 class MovieItem extends Component {
     
@@ -10,17 +19,20 @@ class MovieItem extends Component {
     }
 
     render(){
+        const { classes } = this.props;
         return(
-            <div key={this.props.reduxStore.movies[0].id}>
-                <h3>{this.props.item.title}</h3>
-                <Link to="/details">
-                    <img 
-                    onClick={(event) => this.goToDetails(event, this.props.item.id)}
-                    src={this.props.item.poster} alt={this.props.item.title} />
-                </Link>
-                <h4>Description</h4>
-                <p>{this.props.item.description}</p>
-            </div>
+            <Card className={classes.card}>
+                <CardContent>
+                    <h3>{this.props.item.title}</h3>
+                    <Link to="/details">
+                        <img 
+                        onClick={(event) => this.goToDetails(event, this.props.item.id)}
+                        src={this.props.item.poster} alt={this.props.item.title} />
+                    </Link>
+                    <h4>Description</h4>
+                    <p>{this.props.item.description}</p>
+                </CardContent>
+            </Card>
         )
     }
 }
@@ -29,4 +41,4 @@ const putReduxStateOnProps = ( reduxStore ) =>({
     reduxStore
 });
 
-export default connect(putReduxStateOnProps)(MovieItem);
+export default withStyles(styles)(connect(putReduxStateOnProps)(MovieItem));
